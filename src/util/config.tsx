@@ -94,11 +94,11 @@ export async function startConfigSync() {
 			if (adapter instanceof DesktopAdapter) {
 				skipConfigSave = true;
 
-				await getCurrentWindow()
-					.emit("config-updated", updated)
-					.then(() => {
-						skipConfigSave = false;
-					});
+				try {
+					await getCurrentWindow().emit("config-updated", updated);
+				} finally {
+					skipConfigSave = false;
+				}
 			}
 		}
 	});
